@@ -14,7 +14,7 @@ deploy:
   provider: releases
   api_key:
     secure: rTmu9F1VkufjSbg6ylVkwAEZnZmKGr5BgNS4of4RrVxPIQZHt/xhEAg3o8nEu5WJCnGtpHWezBFzosdK+cKkQIGmHLDhcIZsZtxoVEa4xiT7CFTPQNnHUPWQqunG0CPf7T39GGwc6YeWx1di+94p+Ov84o/RagmSUVBl+gZxECZe5KDDkoK2mEvfnkgLliIaA+ZS5vDSub5RMGoIvb19GlYoZ2XdQ6maKU527Bjtk9AQuR0mK5veCraFPb3CsOBSzaQls+2l7Z3f8v3f5BwA/YF6GuMT6nXJa9ggpRScBmxf7aBRUH+KU4lraQmacqsEqPwEsgEDaI7K8eSv3gA7YYOXxSg8Ks1CNjQOt1iAwaGis6ozyRQ9WZb/e1Fe2H0MUAUiDI6JkW5ihdQPyF+7ZhV4BxIUsHegDP3ToMwxa1vYSiofXK2GeSG3KEMl6JZxhLbpWVlkCwRx+PSlp243S4FY41lY7j0PkGSwvuMa71XWpRp4tHPkxWF+oyPCxamicRErf/WjnbUEYgyzohYjHq7RkKmQcvlDrn2X0ORldLggzLoJ+2pyDPRWX4yT9bEuuyAf0IK1btv/6Ca3U/b2EftpryhQIhQBEUwr+0KiNoAY1oUXsuq9iGNkcEA6dqH6zdpGOR8zttNGhHM0H351A+hFiIXPd/d9bIPTIl3YgHg=
-  file: '"$TRAVIS_BUILD_DIR/app/build/outputs/apk/app-release-unsigned.apk"'
+  file: "$TRAVIS_BUILD_DIR/app/build/outputs/apk/app-release-unsigned.apk"
   skip_cleanup: true
   on:
     tags: true
