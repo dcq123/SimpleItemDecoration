@@ -1,5 +1,21 @@
 > 提供了RecyclerView常用的分隔封装类，包含`LinearLayoutManager`水平和垂直方向的分隔，以及针对`GridLayoutManager`和`StaggerGridLayoutManager`的网格线和`间隔均分`。对于分隔线可设置高度、颜色、`margin`、最后一行是否绘制等，对于间隔仅设置间隔大小即可。
 
+#### 添加依赖
+```
+// root build.gradle
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+
+// app build.gradle
+dependencies {
+    compile 'com.github.dcq123:SimpleItemDecoration:v0.0.1'
+}
+```
+
 #### 效果图：
 
 <div>
