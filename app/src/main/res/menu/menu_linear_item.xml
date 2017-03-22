@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuHorizontal"
+        android:title="水平布局"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuVertical"
+        android:title="垂直布局"
+        app:showAsAction="never" />
+
+</menu>
