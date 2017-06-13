@@ -37,6 +37,8 @@ public class LinearSpaceActivity extends AppCompatActivity {
                 new LinearSpaceItemDecoration.Builder()
                         .setOrientation(LinearLayoutManager.VERTICAL)
                         .setSpaceSize(10)
+                        .setHeaderSpace(100)
+                        .setFooterSpace(50)
                         .build()
         );
     }
