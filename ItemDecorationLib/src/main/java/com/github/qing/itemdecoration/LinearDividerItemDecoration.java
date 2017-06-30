@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
     private LinearDividerItemDecoration(Builder builder) {
         mDivider = new ColorDrawable(Color.GRAY);
         mDivider.setColor(builder.dividerColor);
+
         this.builder = builder;
     }
 
@@ -34,6 +36,7 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         c.save();
         int left, right, top, bottom;
+        int leftMargin, rightMargin, topMargin, bottomMargin, height;
 
         int count = parent.getChildCount();
         if (!builder.isShowLastDivider) {
@@ -46,16 +49,32 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
             int transitionY = (int) ViewCompat.getTranslationY(child);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
-            if (builder.orientation == LinearLayoutManager.VERTICAL) {
-                left = child.getLeft() - params.leftMargin + transitionX + ScreenUtils.dp2px(parent.getContext(), builder.leftMargin);
-                top = child.getBottom() + params.bottomMargin;
-                right = child.getRight() + params.rightMargin - ScreenUtils.dp2px(parent.getContext(), builder.rightMargin);
-                bottom = top + builder.dividerHeight + transitionY;
+            if (i == count -1 && builder.lastDividerHeight > 0) {
+                leftMargin = builder.lastLeftMargin;
+                rightMargin = builder.lastRightMargin;
+                topMargin = builder.lastTopMargin;
+                bottomMargin = builder.lastBottomMargin;
+                height = builder.lastDividerHeight;
+                mDivider.setColor(builder.lastDividerColor);
             } else {
-                top = child.getTop() - params.topMargin + ScreenUtils.dp2px(parent.getContext(), builder.topMargin);
-                bottom = child.getBottom() + params.bottomMargin + transitionY - ScreenUtils.dp2px(parent.getContext(), builder.bottomMargin);
+                leftMargin = builder.leftMargin;
+                rightMargin = builder.rightMargin;
+                topMargin = builder.topMargin;
+                bottomMargin = builder.bottomMargin;
+                height = builder.dividerHeight;
+                mDivider.setColor(builder.dividerColor);
+            }
+
+            if (builder.orientation == LinearLayoutManager.VERTICAL) {
+                left = child.getLeft() - params.leftMargin + transitionX + ScreenUtils.dp2px(parent.getContext(), leftMargin);
+                top = child.getBottom() + params.bottomMargin;
+                right = child.getRight() + params.rightMargin - ScreenUtils.dp2px(parent.getContext(), rightMargin);
+                bottom = top + height + transitionY;
+            } else {
+                top = child.getTop() - params.topMargin + ScreenUtils.dp2px(parent.getContext(), topMargin);
+                bottom = child.getBottom() + params.bottomMargin + transitionY - ScreenUtils.dp2px(parent.getContext(), bottomMargin);
                 left = child.getRight() + params.rightMargin + transitionX;
-                right = left + builder.dividerHeight;
+                right = left + height;
             }
 
             mDivider.setBounds(left, top, right, bottom);
@@ -72,10 +91,19 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
         if (!builder.isShowLastDivider && position == itemCount - 1) {
             return;
         }
-        if (builder.orientation == LinearLayoutManager.VERTICAL) {
-            outRect.set(0, 0, 0, builder.dividerHeight);
+
+        int height;
+
+        if (position == itemCount - 1) {
+            height = builder.lastDividerHeight;
         } else {
-            outRect.set(0, 0, builder.dividerHeight, 0);
+            height = builder.dividerHeight;
+        }
+
+        if (builder.orientation == LinearLayoutManager.VERTICAL) {
+            outRect.set(0, 0, 0, height);
+        } else {
+            outRect.set(0, 0, height, 0);
         }
     }
 
@@ -86,6 +114,12 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
         private int orientation = LinearLayoutManager.VERTICAL;
         private int leftMargin, rightMargin, topMargin, bottomMargin;
         private boolean isShowLastDivider = true;
+        private int lastDividerHeight = 0;
+        private int lastDividerColor = Color.GRAY;
+        private int lastLeftMargin;
+        private int lastRightMargin;
+        private int lastTopMargin;
+        private int lastBottomMargin;
 
         public Builder setDividerHeight(int dividerHeight) {
             this.dividerHeight = dividerHeight;
@@ -124,6 +158,37 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
 
         public Builder isShowLastDivider(boolean flag) {
             this.isShowLastDivider = flag;
+            return this;
+        }
+
+        public Builder setLastDividerHeight(int dividerHeight) {
+            this.lastDividerHeight = dividerHeight;
+            return this;
+        }
+
+        public Builder setLastDividerColor(int lastDividerColor) {
+            this.lastDividerHeight = lastDividerColor;
+            return this;
+        }
+
+
+        public Builder setLastLeftMargin(int leftMargin) {
+            this.lastLeftMargin = leftMargin;
+            return this;
+        }
+
+        public Builder setLastRightMargin(int rightMargin) {
+            this.lastRightMargin = rightMargin;
+            return this;
+        }
+
+        public Builder setLastTopMargin(int topMargin) {
+            this.lastTopMargin = topMargin;
+            return this;
+        }
+
+        public Builder setLastBottomMargin(int bottomMargin) {
+            this.lastBottomMargin = bottomMargin;
             return this;
         }
 
