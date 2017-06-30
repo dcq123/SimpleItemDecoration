@@ -37,8 +37,11 @@ public class LinearDividerActivity extends AppCompatActivity {
                 .setDividerColor(getResources().getColor(R.color.colorBg))
                 .setDividerHeight(2)
                 .setLeftMargin(8)
-                .isShowLastDivider(false)
+                .isShowLastDivider(true)
                 .setOrientation(LinearLayoutManager.VERTICAL)
+                .setLastDividerColor(Color.BLUE)
+                .setLastDividerHeight(20)
+                .setLastLeftMargin(20)
                 .build();
         mRecyclerView.addItemDecoration(dividerItemDecoration);
     }

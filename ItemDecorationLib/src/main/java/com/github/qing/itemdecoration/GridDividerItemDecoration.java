@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,6 +21,7 @@ public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final int DEFAULT_HEIGHT = 2;
     private Drawable mDivider;
     private Builder mBuilder;
+    private Drawable mLastDivider;
 
     private GridDividerItemDecoration(Builder builder) {
         this.mBuilder = builder;
@@ -38,6 +40,27 @@ public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
             ((ColorDrawable) mDivider).setColor(builder.dividerColor);
         } else {
             mDivider = builder.dividerDrawable;
+        }
+
+        if (builder.lastDividerDrawable == null) {
+            if (builder.lastDividerHeight == 0) {
+                mLastDivider = mDivider;
+            } else {
+                mLastDivider = new ColorDrawable(Color.GRAY) {
+                    @Override
+                    public int getIntrinsicHeight() {
+                        return mBuilder.lastDividerHeight;
+                    }
+
+                    @Override
+                    public int getIntrinsicWidth() {
+                        return mBuilder.lastDividerHeight;
+                    }
+                };
+                ((ColorDrawable) mLastDivider).setColor(builder.lastDividerColor);
+            }
+        } else {
+            mLastDivider = builder.dividerDrawable;
         }
     }
 
@@ -109,6 +132,9 @@ public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
         private Drawable dividerDrawable;
         private int dividerHeight = DEFAULT_HEIGHT;
         private int dividerColor = Color.GRAY;
+        private int lastDividerHeight = 0;
+        private int lastDividerColor = Color.GRAY;
+        private Drawable lastDividerDrawable;
 
         public Builder setColNum(int colNum) {
             this.colNum = colNum;
@@ -122,6 +148,21 @@ public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
 
         public Builder setDividerHeight(int dividerHeight) {
             this.dividerHeight = dividerHeight;
+            return this;
+        }
+
+        public Builder setLastDividerHeight(int dividerHeight) {
+            this.lastDividerHeight = dividerHeight;
+            return this;
+        }
+
+        public Builder setLastDividerColor(int lastDividerColor) {
+            this.lastDividerHeight = lastDividerColor;
+            return this;
+        }
+
+        public Builder setLastDivider(Drawable lastDivider) {
+            this.lastDividerDrawable = lastDivider;
             return this;
         }
 
