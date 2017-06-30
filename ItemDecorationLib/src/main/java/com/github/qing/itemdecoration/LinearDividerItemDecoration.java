@@ -49,13 +49,15 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
             int transitionY = (int) ViewCompat.getTranslationY(child);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
-            if (i == count -1 && builder.lastDividerHeight > 0) {
+            if (i == count - 1 && builder.lastDividerHeight > 0) {
                 leftMargin = builder.lastLeftMargin;
                 rightMargin = builder.lastRightMargin;
                 topMargin = builder.lastTopMargin;
                 bottomMargin = builder.lastBottomMargin;
                 height = builder.lastDividerHeight;
-                mDivider.setColor(builder.lastDividerColor);
+                if (builder.lastDividerColor != 0) {
+                    mDivider.setColor(builder.lastDividerColor);
+                }
             } else {
                 leftMargin = builder.leftMargin;
                 rightMargin = builder.rightMargin;
@@ -115,7 +117,7 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
         private int leftMargin, rightMargin, topMargin, bottomMargin;
         private boolean isShowLastDivider = true;
         private int lastDividerHeight = 0;
-        private int lastDividerColor = Color.GRAY;
+        private int lastDividerColor = 0;
         private int lastLeftMargin;
         private int lastRightMargin;
         private int lastTopMargin;
@@ -167,10 +169,9 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
         }
 
         public Builder setLastDividerColor(int lastDividerColor) {
-            this.lastDividerHeight = lastDividerColor;
+            this.lastDividerColor = lastDividerColor;
             return this;
         }
-
 
         public Builder setLastLeftMargin(int leftMargin) {
             this.lastLeftMargin = leftMargin;
